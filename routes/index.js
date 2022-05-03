@@ -24,8 +24,55 @@ router.get('/', function(req, res, next) {
 
       });
 
-
     }
+
+  });
+
+});
+
+router.get('/contact', function(req, res, next){
+
+  res.render('contact', {
+
+    title: 'Contato - Restaurante Saboroso!',
+    background: 'images/img_bg_3.jpg',
+    h1: 'Diga um oi!'
+
+  });
+
+});
+
+router.get('/menu', function(req, res, next){
+
+  res.render('menu', {
+
+    title: 'Menu - Restaurante Saboroso!',
+    background: 'images/img_bg_1.jpg',
+    h1: 'Saboreie o nosso menu!'
+
+  });
+
+});
+
+router.get('/reservation', function(req, res, next){
+
+  res.render('reservation', {
+
+    title: 'Reserva - Restaurante Saboroso!',
+    background: 'images/img_bg_2.jpg',
+    h1: 'Reserve uma mesa!'
+
+  });
+
+});
+
+router.get('/services', function(req, res, next){
+
+  res.render('services', {
+
+    title: 'Serviço - Restaurante Saboroso!',
+    background: 'images/img_bg_1.jpg',
+    h1: 'É um prazer poder servir!'
 
   });
 
