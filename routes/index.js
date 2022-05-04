@@ -1,10 +1,10 @@
-var conn = require('./../inc/db.js');;
-var menus = require('./../inc/menus.js');
-var reservation = require('./../inc/reservation.js');
+var conn = require('./../inc/db.js');
 var express = require('express');
-const req = require('express/lib/request');
 var router = express.Router();
 
+var menus = require('./../inc/menus.js');
+var reservation = require('./../inc/reservation.js');
+var contact = require('./../inc/contact.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -23,17 +23,47 @@ router.get('/', function(req, res, next) {
 
 });
 
+//Rotas do Contato
+
 router.get('/contact', function(req, res, next){
 
-  res.render('contact', {
-
-    title: 'Contato - Restaurante Saboroso!',
-    background: 'images/img_bg_3.jpg',
-    h1: 'Diga um oi!'
-
-  });
+  contact.render(req, res);
 
 });
+
+router.post('/contact', function(req, res, next){
+
+  if(!req.body.name){
+
+    contact.render(req, res, "Digite o nome!");
+
+  }else if(!req.body.email){
+
+    contact.render(req, res, "Digite o email!");
+
+  }else if(!req.body.message){
+
+    contact.render(req, res, "Digite a mensagem!");
+
+  }else{
+
+    contact.saveForm(req.body).then(results=>{
+
+      req.body={};
+
+      contact.render(req, res, null, "Contato enviado com sucesso!");
+
+    }).catch(err=>{
+
+      contact.render(req, res, err.message);
+
+    });
+
+  }
+
+});
+
+//Rotas do Menu
 
 router.get('/menu', function(req, res, next){
 
@@ -52,17 +82,11 @@ router.get('/menu', function(req, res, next){
 
 });
 
+//Rotas da Reserva
+
 router.get('/reservation', function(req, res, next){
 
   reservation.render(req, res);
-
-  res.render('reservation', {
-
-    title: 'Reserva - Restaurante Saboroso!',
-    background: 'images/img_bg_2.jpg',
-    h1: 'Reserve uma mesa!'
-
-  });
 
 });
 
@@ -92,17 +116,21 @@ router.post('/reservation', function(req, res, next){
 
     reservation.saveForm(req.body).then(results=>{
 
+      req.body= {};
+
       reservation.render(req, res, null, "Reserva realizada com sucesso!");
 
     }).catch(err =>{
 
-      reservation.render(res, req, err);
-      
+      reservation.render(res, req, err.messge);
+
     })
 
   }
 
 });
+
+//Rotas dos Serviços
 
 router.get('/services', function(req, res, next){
 
