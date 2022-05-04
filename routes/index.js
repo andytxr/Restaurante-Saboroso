@@ -1,5 +1,6 @@
-var conn = require('./../inc/db.js');
-var menus = require('./../inc/menus.js')
+var conn = require('./../inc/db.js');;
+var menus = require('./../inc/menus.js');
+var reservation = require('./../inc/reservation.js');
 var express = require('express');
 const req = require('express/lib/request');
 var router = express.Router();
@@ -53,6 +54,8 @@ router.get('/menu', function(req, res, next){
 
 router.get('/reservation', function(req, res, next){
 
+  reservation.render(req, res);
+
   res.render('reservation', {
 
     title: 'Reserva - Restaurante Saboroso!',
@@ -60,6 +63,44 @@ router.get('/reservation', function(req, res, next){
     h1: 'Reserve uma mesa!'
 
   });
+
+});
+
+router.post('/reservation', function(req, res, next){
+
+  if(!req.body.name){
+
+    reservation.render(req, res, "Digite o nome!");
+
+  }else if(!req.body.email){
+
+    reservation.render(req, res, "Digite o email!");
+
+  }else if(!req.body.people){
+
+    reservation.render(req, res, "Selecione a quantidade de pessoas!");
+
+  }else if(!req.body.date){
+
+    reservation.render(req, res, "Marque a data!");
+
+  }else if(!req.body.time){
+
+    reservation.render(req, res, "Marque o horário!");
+
+  } else {
+
+    reservation.saveForm(req.body).then(results=>{
+
+      reservation.render(req, res, null, "Reserva realizada com sucesso!");
+
+    }).catch(err =>{
+
+      reservation.render(res, req, err);
+      
+    })
+
+  }
 
 });
 
