@@ -10,7 +10,7 @@
 	<div id="page">
 
     <%- include("header-menu.ejs") -%>
-    <% if(home) { %>
+    <% if(typeof home==='boolean' && home) { %>
         <%- include("header-index.ejs") -%>
     <% } else { %>
         <%- include("header.ejs") -%>

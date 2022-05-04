@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
       menus: results,
       home: true
 
-    })
+    });
 
   });
 
@@ -43,7 +43,7 @@ router.get('/menu', function(req, res, next){
       title: 'Menu - Restaurante Saboroso!',
       background: 'images/img_bg_1.jpg',
       h1: 'Saboreie o nosso menu!',
-      menus: results
+      menus: results,
   
     });
 
