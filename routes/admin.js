@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var users = require("./../inc/users.js");
 
-//Rotas da Tela Inicial
+//Rotas de Logout 
 
 router.use(function(req, res, next){
 
@@ -24,6 +24,8 @@ router.get("/logout", function(req, res, next){
 
 });
 
+//Rotas de Tela Inicial
+
 router.get("/", function(req, res, next){
 
     res.render("admin/index", {
@@ -34,7 +36,7 @@ router.get("/", function(req, res, next){
 
 });
 
-//Rotas de Login/Logout
+//Rotas de Login
 
 router.get("/login", function(req, res, next){
 
