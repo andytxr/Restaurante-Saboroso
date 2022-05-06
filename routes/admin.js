@@ -137,6 +137,20 @@ router.post("/menus", function(req, res, next){
 
 })
 
+router.delete("/menus/:id", function(req, res, next){
+
+    menus.deleteMenu(req.params.id).then(results=>{
+
+        res.send(results);
+
+    }).catch(err=>{
+
+        res.send(err);
+
+    })
+
+});
+
 //Rotas de Reservas
 
 router.get("/reservations", function(req, res, next){
