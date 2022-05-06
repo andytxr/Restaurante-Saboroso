@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
+
 var users = require("./../inc/users.js");
+var admin = require("./../inc/admin.js");
 
 //Rotas de Logout 
 
@@ -17,6 +19,13 @@ router.use(function(req, res, next){
 
 });
 
+router.use(function(req, res, next){
+
+    req.menus=admin.getMenus();
+    next();
+
+})
+
 router.get("/logout", function(req, res, next){
 
     delete req.session.user;
@@ -30,7 +39,7 @@ router.get("/", function(req, res, next){
 
     res.render("admin/index", {
 
-
+        menus:req.menus
 
     });
 
@@ -77,7 +86,7 @@ router.get("/contacts", function(req, res, next){
 
     res.render("admin/contacts", {
 
-        
+        menus:req.menus
 
     });
 
@@ -89,7 +98,7 @@ router.get("/emails", function(req, res, next){
 
     res.render("admin/emails", {
 
-        
+        menus:req.menus
 
     });
 
@@ -101,7 +110,7 @@ router.get("/menus", function(req, res, next){
 
     res.render("admin/menus", {
 
-        
+        menus:req.menus
 
     });
 
@@ -113,6 +122,7 @@ router.get("/reservations", function(req, res, next){
 
     res.render("admin/reservations", {
 
+        menus:req.menus,
         date:{}
 
     });
@@ -125,7 +135,7 @@ router.get("/users", function(req, res, next){
 
     res.render("admin/users", {
 
-        
+        menus:req.menus
 
     });
 
