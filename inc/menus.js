@@ -5,17 +5,17 @@ module.exports = {
 
     getMenus(){
 
-        return new Promise((res,rej)=>{
+        return new Promise((resolve,reject)=>{
 
             conn.query(`SELECT * FROM tb_menus ORDER BY title`, (err, results)=>{
 
                 if(err){
 
-                    rej(err);
+                    reject(err);
 
                 }else{
 
-                    res(results);
+                    resolve(results);
 
                 }
 

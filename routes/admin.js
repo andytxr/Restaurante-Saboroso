@@ -4,6 +4,8 @@ var router = express.Router();
 var users = require("./../inc/users.js");
 var admin = require("./../inc/admin.js");
 var menus = require("./../inc/menus.js");
+var reservations = require("./../inc/reservation.js");
+const { get } = require('express/lib/response');
 
 //Rotas de Logout 
 
@@ -155,7 +157,44 @@ router.delete("/menus/:id", function(req, res, next){
 
 router.get("/reservations", function(req, res, next){
 
-    res.render("admin/reservations", admin.getParams(req, {date: {}}));
+    reservations.getReservations().then(data=>{
+
+        res.render("admin/reservations", admin.getParams(req, {
+
+            date: {},
+            data
+        
+        }));
+
+    });
+
+});
+
+router.post("/reservations", function(req, res, next){
+
+    reservations.saveForm(req.fields).then(results=>{
+
+        res.send(results);
+
+    }).catch(err =>{
+
+        res.send(err);
+
+    })
+
+})
+
+router.delete("/reservations/:id", function(req, res, next){
+
+    reservations.deleteReservation(req.params.id).then(results=>{
+
+        res.send(results);
+
+    }).catch(err=>{
+
+        res.send(err);
+
+    })
 
 });
 
