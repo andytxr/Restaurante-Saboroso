@@ -144,108 +144,38 @@
 
 <script src="/js/simple-file-reader.js"></script>
 <script src="/js/simple-formsave.js"></script>
+<script src="/js/grid.js"></script>
 
 <script>
 
   new SimpleFileReader("#modal-create [type=file]", "#modal-create img");
   new SimpleFileReader("#modal-update [type=file]", "#modal-update img");
 
-  let formCreate = document.querySelector("#modal-create form");
+  new Grid({
 
-  formCreate.save().then(json=>{
+    deleteUrl: "/admin/menus/${data.id}",
+    deleteAlert: "Deseja realmente excluir o prato ${data.title} do menu?",
+    onUpdateLoad: (form, name, data) => {
 
-    window.location.reload();
+      let input = form.querySelector(`[name=${name}]`);
 
-  }).catch(err=>{
+      switch(name){
+        case 'photo':
 
-    console.log(err);
+          form.querySelector('img').src='/' + data[name];
 
-  })
+          break;
+        default:
 
-  let formUpdate = document.querySelector("#modal-update form");
+          if(input){
 
-  formUpdate.save().then(json=>{
-
-    window.location.reload();
-
-  }).catch(err=>{
-
-    console.log(err);
-
-  });
-
-  [...document.querySelectorAll('.btn-delete')].forEach(btn=>{
-
-    btn.addEventListener('click', e=>{
-
-
-      let tr = e.composedPath().find(el=>{
-
-        return (el.tagName.toUpperCase() === 'TR');
-
-      });
-
-      let data = JSON.parse(tr.dataset.row);
-
-      if(confirm(`Deseja excluir o prato ${data.title} do menu?`)){
-
-        fetch(`/admin/menus/${data.id}`, {
-
-          method: 'DELETE'
-
-        }).catch(response =>{
-
-          response.json().then(json =>{
-
-            window.location.reload();
-
-          });
-
-        });
-
-        window.location.reload();
-
-      }
-
-    });
-
-  });
-  
-  [...document.querySelectorAll('.btn-update')].forEach(btn =>{
-
-    btn.addEventListener('click', e=>{
-
-      let tr = e.composedPath().find(el=>{
-
-        return (el.tagName.toUpperCase() === 'TR');
-
-      });
-
-      let data = JSON.parse(tr.dataset.row);
-
-      for(let name in data){
-
-        if(name === 'photo'){
-
-          formUpdate.querySelector("img").src = '/'+data[name];
-
-        }else{
-
-          let input = formUpdate.querySelector(`[name=${name}]`);
-
-          if (input){
-            
-            input.value = data[name];
+            input.value=data[name];
 
           }
 
-        }
-
       }
 
-      $("#modal-update").modal('show');
-
-    });
+    }
 
   });
 

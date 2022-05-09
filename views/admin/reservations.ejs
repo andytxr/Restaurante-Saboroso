@@ -203,109 +203,40 @@
 
 <script src="/js/moment.min.js"></script> 
 <script src="/js/simple-formsave.js"></script>
+<script src="/js/grid.js"></script>
 
 <script>
 
-  let formCreate = document.querySelector("#modal-create form");
+  new Grid({
 
-  formCreate.save().then(json=>{
+    deleteUrl: "/admin/reservations/${data.id}",
+    deleteAlert: "Deseja realmente excluir a reserva de ${data.name}?",
+    onUpdateLoad: (form, name, data) => {
 
-    window.location.reload();
+      let input = form.querySelector(`[name=${name}]`);
 
-  }).catch(err=>{
+      switch(name){
 
-    console.log(err);
-
-  })
-
-  let formUpdate = document.querySelector("#modal-update form");
-
-  formUpdate.save().then(json=>{
-
-    window.location.reload();
-
-  }).catch(err=>{
-
-    console.log(err);
-
-  });
-
-  [...document.querySelectorAll('.btn-delete')].forEach(btn=>{
-
-    btn.addEventListener('click', e=>{
-
-
-      let tr = e.composedPath().find(el=>{
-
-        return (el.tagName.toUpperCase() === 'TR');
-
-      });
-
-      let data = JSON.parse(tr.dataset.row);
-
-      if(confirm(`Deseja excluir a reserva de ${data.name}?`)){
-
-        fetch(`/admin/reservations/${data.id}`, {
-
-          method: 'DELETE'
-
-        }).catch(response =>{
-
-          response.json().then(json =>{
-
-            window.location.reload();
-
-          });
-
-        });
-
-        window.location.reload();
-
-      }
-
-    });
-
-  });
-
-  [...document.querySelectorAll('.btn-update')].forEach(btn =>{
-
-    btn.addEventListener('click', e=>{
-
-      let tr = e.composedPath().find(el=>{
-
-        return (el.tagName.toUpperCase() === 'TR');
-
-      });
-
-      let data = JSON.parse(tr.dataset.row);
-
-      for(let name in data){
-
-        let input = formUpdate.querySelector(`[name=${name}]`);
-
-        if(name === 'date'){
+        case 'date':
 
           if(input){
 
-            input.value=moment(data[name]).format("YYYY-MM-DD");
+            input.value=moment(data[name]).format('YYYY-MM-DD');
 
           }
 
-        }else{
+          break;
+        default:
 
-          if (input){
-            
-            input.value = data[name];
+          if(input){
+
+            input.value=data[name];
 
           }
-
-        }
 
       }
 
-      $("#modal-update").modal('show');
-
-    });
+    }
 
   });
 
