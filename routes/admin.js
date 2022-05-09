@@ -1,4 +1,5 @@
 var express = require('express');
+var moment = require('moment');
 var router = express.Router();
 
 var users = require("./../inc/users.js");
@@ -6,6 +7,12 @@ var admin = require("./../inc/admin.js");
 var menus = require("./../inc/menus.js");
 var reservations = require("./../inc/reservation.js");
 const { get } = require('express/lib/response');
+
+moment.locale('pt-BR', {
+
+    months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+
+})
 
 //Rotas de Logout 
 
@@ -162,7 +169,8 @@ router.get("/reservations", function(req, res, next){
         res.render("admin/reservations", admin.getParams(req, {
 
             date: {},
-            data
+            data,
+            moment
         
         }));
 
