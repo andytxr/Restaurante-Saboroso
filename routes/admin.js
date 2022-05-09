@@ -5,6 +5,7 @@ var router = express.Router();
 var users = require("./../inc/users.js");
 var admin = require("./../inc/admin.js");
 var menus = require("./../inc/menus.js");
+var contacts = require("./../inc/contacts.js")
 var reservations = require("./../inc/reservation.js");
 const { get } = require('express/lib/response');
 
@@ -104,7 +105,29 @@ router.post("/login", function(req, res, next){
 
 router.get("/contacts", function(req, res, next){
 
-    res.render("admin/contacts", admin.getParams(req));
+    contacts.getContacts().then(data=>{
+
+        res.render("admin/contacts", admin.getParams(req, {
+
+            data
+
+        }));
+
+    });
+
+});
+
+router.delete("/contacts:id", function(req, res, next){
+
+    contacts.deleteContact(req.params.id).then(results=>{
+
+        res.send(results);
+
+    }).catch(err=>{
+
+        res.send(err);
+
+    })
 
 });
 

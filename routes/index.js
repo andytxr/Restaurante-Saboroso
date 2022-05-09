@@ -4,7 +4,7 @@ var router = express.Router();
 
 var menus = require('./../inc/menus.js');
 var reservation = require('./../inc/reservation.js');
-var contact = require('./../inc/contact.js');
+var contact = require('../inc/contacts.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -35,27 +35,27 @@ router.post('/contact', function(req, res, next){
 
   if(!req.body.name){
 
-    contact.render(req, res, "Digite o nome!");
+    contacts.render(req, res, "Digite o nome!");
 
   }else if(!req.body.email){
 
-    contact.render(req, res, "Digite o email!");
+    contacts.render(req, res, "Digite o email!");
 
   }else if(!req.body.message){
 
-    contact.render(req, res, "Digite a mensagem!");
+    contacts.render(req, res, "Digite a mensagem!");
 
   }else{
 
-    contact.saveForm(req.body).then(results=>{
+    contacts.saveForm(req.body).then(results=>{
 
       req.body={};
 
-      contact.render(req, res, null, "Contato enviado com sucesso!");
+      contacts.render(req, res, null, "Contato enviado com sucesso!");
 
     }).catch(err=>{
 
-      contact.render(req, res, err.message);
+      contacts.render(req, res, err.message);
 
     });
 
