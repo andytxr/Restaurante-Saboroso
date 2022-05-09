@@ -7,7 +7,7 @@ module.exports = {
 
         return new Promise((resolve,reject)=>{
 
-            conn.query(`SELECT * FROM tb_menus ORDER BY title`, (err, results)=>{
+            conn.query(`SELECT * FROM tb_menus ORDER BY id`, (err, results)=>{
 
                 if(err){
 
@@ -106,7 +106,7 @@ module.exports = {
 
             conn.query(`
             
-                DELETE FROM tb_menus WHERE Id = ?
+                DELETE FROM tb_menus WHERE id = ?
 
             `,[
 
