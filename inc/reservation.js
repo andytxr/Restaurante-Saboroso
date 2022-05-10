@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 var conn = require("./db.js");
 var Pagination = require("./pagination.js");
 
@@ -158,6 +160,56 @@ module.exports = {
 
         });
 
+    },
+
+    charts(req){
+
+        return new Promise((resolve, reject)=>{
+
+            conn.query(`
+
+                SET SQL_MODE = '';
+                SELECT
+                    CONCAT(YEAR(date), '-', MONTH(date)) AS date,
+                    COUNT(*) AS total,
+                    SUM(people)/COUNT(*) AS avg_people
+                FROM tb_reservations
+                WHERE
+                    date BETWEEN ? AND ?
+                GROUP BY YEAR(date), MONTH(date)
+                ORDER BY YEAR(date) DESC, MONTH(date) DESC;
+
+            `, [
+                req.query.start,
+                req.query.end
+            ], (err, results)=>{
+
+                if (err) { 
+
+                    reject(err); 
+
+                } else { 
+
+                    let months = [];
+                    let values = [];
+
+                    results.forEach(row=>{
+                        months.push(moment(row.date).format('MMM YYYY'));
+                        values.push(row.total);
+                    })
+
+                    resolve({
+                        months,
+                        values
+                    });
+                }
+               
+            });
+
+        });
+
+
     }
+
 
 }

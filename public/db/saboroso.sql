@@ -6,6 +6,7 @@ USE `saboroso`;
 -- ------------------------------------------------------
 -- Server version	5.7.20-log
 
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -130,7 +131,7 @@ UNLOCK TABLES;
 -- Table structure for table `tb_emails`
 --
 
-DROP TABLE IF EXISTS `tb_emails`;
+DROP TABLE IF EXISTS `tb_emailstb_emails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_emails` (
