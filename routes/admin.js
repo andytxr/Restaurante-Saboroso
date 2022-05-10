@@ -7,7 +7,8 @@ var admin = require("./../inc/admin.js");
 var menus = require("./../inc/menus.js");
 var contacts = require("./../inc/contacts.js")
 var reservations = require("./../inc/reservation.js");
-const { get } = require('express/lib/response');
+var emails = require("./../inc/emails.js")
+
 
 moment.locale('pt-BR', {
 
@@ -135,7 +136,30 @@ router.delete("/contacts/:id", function(req, res, next){
 
 router.get("/emails", function(req, res, next){
 
-    res.render("admin/emails", admin.getParams(req));
+    emails.getEmails().then(data =>{
+
+        res.render("admin/emails", admin.getParams(req, {
+
+            data
+
+        }));
+
+    });
+
+
+});
+
+router.delete("/emails/:id", function(req, res, next){
+
+    emails.deleteEmail(req.params.id).then(results=>{
+
+        res.send(results);
+
+    }).catch(err=>{
+
+        res.send(err);
+
+    })
 
 });
 

@@ -4,7 +4,8 @@ var router = express.Router();
 
 var menus = require('./../inc/menus.js');
 var reservation = require('./../inc/reservation.js');
-var contact = require('../inc/contacts.js');
+var contact = require('./../inc/contacts.js');
+var emails = require('./../inc/emails.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -143,5 +144,22 @@ router.get('/services', function(req, res, next){
   });
 
 });
+
+//Rotas da Newsletter
+
+router.post("/subscribe", function(req, res, next){
+
+  emails.saveEmail(req).then(results=>{
+
+    res.send(results)
+
+  }).catch(err=>{
+
+    res.send(err);
+
+  });
+  
+
+})
 
 module.exports = router;

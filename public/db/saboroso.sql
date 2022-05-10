@@ -127,6 +127,29 @@ INSERT INTO `tb_users` VALUES (1,'João Rangel','joao@hcode.com.br','123456','20
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tb_emails`
+--
+
+DROP TABLE IF EXISTS `tb_emails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_emails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_emails`
+--
+
+LOCK TABLES `tb_emails` WRITE;
+/*!40000 ALTER TABLE `tb_emails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_emails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping events for database 'saboroso'
 --
 
