@@ -117,7 +117,7 @@ router.get("/contacts", function(req, res, next){
 
 });
 
-router.delete("/contacts:id", function(req, res, next){
+router.delete("/contacts/:id", function(req, res, next){
 
     contacts.deleteContact(req.params.id).then(results=>{
 
