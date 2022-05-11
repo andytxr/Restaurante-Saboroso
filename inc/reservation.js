@@ -168,7 +168,6 @@ module.exports = {
 
             conn.query(`
 
-                SET SQL_MODE = '';
                 SELECT
                     CONCAT(YEAR(date), '-', MONTH(date)) AS date,
                     COUNT(*) AS total,
